@@ -90,6 +90,10 @@ app.post('/contact', async (req, res) => {
   }
 });
 
+app.get('/hello', (req, res) => {
+  res.send('Hello World!')
+  })
+
 // Start the server
 app.listen(3035, () => {
   console.log('Server connected');
