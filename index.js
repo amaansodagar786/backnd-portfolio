@@ -75,10 +75,10 @@ app.post('/contact', async (req, res) => {
       to: email,
       subject: 'Welcome',
       html: `
-        <p>Hello ${name}</p>
-        <p>Thank you for registering with VHX View. We are excited to have you on board!</p>
-        <p>Best regards,</p>
-        <p>VHX View Team</p>
+        <p>Hello ${name},</p>
+<p>Thank you for reaching out! I appreciate you taking the time to connect with me. I will get back to you as soon as possible.</p>
+<p>Best regards,</p>
+<p>Yours truly</p>
       `,
     };
 
