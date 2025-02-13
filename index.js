@@ -90,6 +90,36 @@ app.post('/contact', async (req, res) => {
   }
 });
 
+
+// **3️⃣ Visitor Logging Endpoint**
+app.get("/log-visit", async (req, res) => {
+  try {
+    console.log("📢 New Portfolio Visit Logged!");
+
+    // Send notification email to the owner
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: process.env.NOTIFY_EMAIL, // Your email
+      subject: "👀 New Portfolio Visit",
+      text: "Someone just visited your portfolio!",
+    });
+
+    res.json({ success: true, message: "Visit logged successfully." });
+  } catch (error) {
+    console.error("❌ Error Logging Visit:", error);
+    res.status(500).json({ success: false, error: "Failed to log visit." });
+  }
+});
+
+
 app.get('/hello', (req, res) => {
   res.send('Hello World!')
   })
