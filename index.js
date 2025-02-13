@@ -107,7 +107,7 @@ app.get("/log-visit", async (req, res) => {
 
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
-      to: process.env.NOTIFY_EMAIL, // Your email
+      to: process.env.EMAIL_USER, // Your email
       subject: "👀 New Portfolio Visit",
       text: "Someone just visited your portfolio!",
     });
