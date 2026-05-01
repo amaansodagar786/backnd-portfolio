@@ -13,12 +13,31 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Connect to MongoDB
-mongoose
-  .connect(
-    "mongodb+srv://sodagaramaan786:HbiVzsmAJNAm4kg4@cluster0.576stzr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-  )
-  .then(() => console.log("mongodb connected"))
-  .catch((err) => console.log("mongo error", err));
+// mongoose
+//   .connect(
+//     "mongodb+srv://sodagaramaan786:HbiVzsmAJNAm4kg4@cluster0.576stzr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+//   )
+//   .then(() => console.log("mongodb connected"))
+//   .catch((err) => console.log("mongo error", err));
+
+
+
+// const mongoose = require("mongoose"); 
+
+// const mongoose = require("mongoose"); 
+
+mongoose.connect(
+  "mongodb://admin:Admin%402025@89.116.236.84:27017/portfolio?authSource=admin&authMechanism=SCRAM-SHA-256",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }
+)
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.error("Mongo error:", err));
+
+
+
 
 // Define the schema and model for the portfolio
 const portfolioSchema = new mongoose.Schema({
@@ -120,9 +139,56 @@ app.get("/log-visit", async (req, res) => {
 });
 
 
+// 4️⃣ Resume Download Logging Endpoint
+app.post("/log-resume-download", async (req, res) => {
+  try {
+    const { userAgent, ip } = req.body;
+
+    console.log("📄 Resume Downloaded!");
+
+    // Send notification email to the owner
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    // Get current time
+    const currentTime = new Date().toLocaleString('en-US', {
+      timeZone: 'Asia/Kolkata',
+      dateStyle: 'full',
+      timeStyle: 'long'
+    });
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: process.env.EMAIL_USER, // Your email
+      subject: "📄 Resume Downloaded from Portfolio!",
+      html: `
+        <h2>📄 Resume Download Alert!</h2>
+        <p><strong>Someone just downloaded your resume from the portfolio website!</strong></p>
+        <hr />
+        <p><strong>Time:</strong> ${currentTime}</p>
+        <p><strong>User Agent:</strong> ${userAgent || 'Unknown'}</p>
+        <p><strong>IP Address:</strong> ${ip || 'Unknown'}</p>
+        <hr />
+        <p>💡 <em>This could be a potential employer or recruiter showing interest!</em></p>
+      `,
+    });
+
+    res.json({ success: true, message: "Resume download logged successfully." });
+  } catch (error) {
+    console.error("❌ Error Logging Resume Download:", error);
+    res.status(500).json({ success: false, error: "Failed to log resume download." });
+  }
+});
+
+
 app.get('/hello', (req, res) => {
   res.send('Hello World!')
-  })
+})
 
 // Start the server
 app.listen(3035, () => {
