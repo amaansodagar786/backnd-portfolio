@@ -7,7 +7,20 @@ const cors = require('cors');
 require('dotenv').config();
 
 // Use CORS middleware
-app.use(cors());
+// app.use(cors()); 
+
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "https://amaan-sodagar-portfolio.vercel.app"
+
+  ],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
 
 // Middleware to parse JSON
 app.use(bodyParser.json());
