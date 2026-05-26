@@ -26,28 +26,25 @@ app.use(cors({
 app.use(bodyParser.json());
 
 // Connect to MongoDB
-mongoose
-  .connect(
-    "mongodb+srv://sodagaramaan786:HbiVzsmAJNAm4kg4@cluster0.576stzr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-  )
-  .then(() => console.log("mongodb connected"))
-  .catch((err) => console.log("mongo error", err));
+// mongoose
+//   .connect(
+//     "mongodb+srv://sodagaramaan786:HbiVzsmAJNAm4kg4@cluster0.576stzr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+//   )
+//   .then(() => console.log("mongodb connected"))
+//   .catch((err) => console.log("mongo error", err));
 
 
 
-// const mongoose = require("mongoose"); 
 
-// const mongoose = require("mongoose"); 
-
-// mongoose.connect(
-//   "mongodb://admin:Admin%402025@89.116.236.84:27017/portfolio?authSource=admin&authMechanism=SCRAM-SHA-256",
-//   {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-//   }
-// )
-//   .then(() => console.log("MongoDB connected"))
-//   .catch(err => console.error("Mongo error:", err));
+mongoose.connect(
+  "mongodb://admin:Admin%402025@93.127.167.226:27017/portfolio?authSource=admin&authMechanism=SCRAM-SHA-256",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }
+)
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.error("Mongo error:", err));
 
 
 
